@@ -1,11 +1,11 @@
 #Practice 2 - School Holiday Camp Program
 
 # LIST OF CAMPS
-camps = {
-    1: {"name": "Cultural Immersion", "days": 5, "cost": 800},
-    2: {"name": "Kayaking and Pancakes", "days": 3, "cost": 400},
-    3: {"name": "Mountain Biking", "days": 4, "cost": 900}
-}
+camps = [
+    {"name": "Cultural Immersion", "days": 5, "cost": 800},
+    {"name": "Kayaking and Pancakes", "days": 3, "cost": 400},
+    {"name": "Mountain Biking", "days": 4, "cost": 900}
+]
 
 
 # List of FUNCTIONS
@@ -27,7 +27,7 @@ def get_username():
             print("Please input your name.")
         else:
             nametry = False
-            return True
+            return username_input.title()
 
 
 def get_age():
@@ -54,17 +54,43 @@ def get_age():
             return False
         else:
             agetry = False
-            return True
+            return int(age_input)
             
 def camp_options():
     camp_number = 0
     for index, camp in enumerate(camps, start=1):
-        print(f"{index}. {camp['name']} - This is for {camp['days']} days and costs ${camp['cost']}.") 
+        print(f"{index}. {camp['name']} - This is for {camp['days']} days and costs ${camp['cost']}.")
 
-    camp_pick = input("Enter the camp you want: ")
+    camp_pickwhile = True
+    while camp_pickwhile == True:
+        camp_pick = input("Enter the number of the camp you want: ")
+        if camp_pick == "":
+            print("Please enter a number: ")
+        elif int(camp_pick) > len(camps):
+            print("Please pick from the options above: ")
+        else:
+            camp_pickwhile = False
+            print(f"{camp_pick}")
+            return camp_pick
+
+def shuttle():
+    shuttleconfirm = input("Do you want to take the shuttle buys? Enter Yes or No: ").title()
+    if shuttleconfirm == "True":
+        return True
+    elif shuttleconfirm == "False":
+        return False
+
+def get_meal():
+    print("There are three meal options!")
+    print('''
+Standard
+Vegetarian
+Vegan
+''')
     
         
 print("Welcome to Tane's Holiday Camps Registration!")
-get_username()
-get_age()
+
+print()
+
 camp_options()
