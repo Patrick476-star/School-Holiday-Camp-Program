@@ -65,15 +65,12 @@ def camp_options():
 
     camp_pickwhile = True
     while camp_pickwhile == True:
-        camp_pick = input("Enter the number of the camp you want: ")
-        if camp_pick == "":
-            print("Please enter a number: ")
-        elif int(camp_pick) > len(camps):
-            print("Please pick from the options above: ")
-        else:
+        camp_pick = int(input("Enter the number of the camp you want: "))
+        if camp_pick <= len(camps):
             camp_pickwhile = False
-            print(f"{camp_pick}")
             return camp_pick
+        else:
+            print("Please pick from the options above!")
 
 def shuttle():
     shuttleconfirm = input("Do you want to take the shuttle buys? Enter Yes or No: ").strip().title()
@@ -99,7 +96,7 @@ def get_meal():
 
 def calculate_cost(camp_choice, transport):
     if shuttle == True:
-        total_cost = {camp_choice['cost']} + 80
+        total_cost = {camp_choice} + 80
     else:
         total_cost = {camp_choice['cost']}
 
@@ -114,11 +111,11 @@ while repeat:
     name = get_username()
     age = get_age()
 
-    camp_choice = camp_options()
+    camp_option = camp_options()
     transport = shuttle()
     meal_choice = get_meal()
 
-    total_cost = calculate_cost(camp_choice, transport)
+    total_cost = calculate_cost(camp_option, transport)
 
-    print(f"{name} (age {age}) is attending the {camp_choice} for {camp_choice['days']}.")
+    print(f"{name} (age {age}) is attending the {camp_option} for {camp_option['days']}.")
     print(f"They chose a {meal_choice}. The total cost is {total_cost}.")
