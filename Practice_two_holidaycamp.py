@@ -7,6 +7,8 @@ camps = [
     {"name": "Mountain Biking", "days": 4, "cost": 900}
 ]
 
+mealsop = {"Standard", "Vegetarian", "Vegan"}
+
 
 # List of FUNCTIONS
 def get_username():
@@ -15,7 +17,7 @@ def get_username():
     while nametry == True:
         #While this function is TRUE, it will ask for the user's name.
         letter_only = True
-        username_input = input("Please enter your name: ").title()
+        username_input = input("Please enter your name: ").strip().title()
         for char in username_input:
             #If ONE of the characters is not a letter, this is set to false.
             if not char.isalpha():
@@ -27,7 +29,8 @@ def get_username():
             print("Please input your name.")
         else:
             nametry = False
-            return username_input.title()
+            print(f"{username_input}")
+            return username_input
 
 
 def get_age():
@@ -57,7 +60,6 @@ def get_age():
             return int(age_input)
             
 def camp_options():
-    camp_number = 0
     for index, camp in enumerate(camps, start=1):
         print(f"{index}. {camp['name']} - This is for {camp['days']} days and costs ${camp['cost']}.")
 
@@ -74,23 +76,49 @@ def camp_options():
             return camp_pick
 
 def shuttle():
-    shuttleconfirm = input("Do you want to take the shuttle buys? Enter Yes or No: ").title()
+    shuttleconfirm = input("Do you want to take the shuttle buys? Enter Yes or No: ").strip().title()
     if shuttleconfirm == "True":
         return True
     elif shuttleconfirm == "False":
         return False
 
 def get_meal():
-    print("There are three meal options!")
-    print('''
-Standard
-Vegetarian
-Vegan
-''')
-    
-        
-print("Welcome to Tane's Holiday Camps Registration!")
+    mealask = True
+    while mealask == True:
+            print("There are three meal options!")
+            for meal in mealsop:
+                print(f"{meal}")
+
+            user_finmeal = input("Choose the meal option: ").strip().title()
+            if user_finmeal in mealsop:
+                mealask = False
+                print(f"{user_finmeal}")
+                return user_finmeal
+            else:
+                print("Please pick from the meals above.")
+
+def calculate_cost(camp_choice, transport):
+    if shuttle == True:
+        total_cost = {camp_choice['cost']} + 80
+    else:
+        total_cost = {camp_choice['cost']}
+
+#MAIN --------------------------------------------------------------------------------------
 
 print()
 
-camp_options()
+repeat = True
+while repeat:
+    print("Welcome to Tane's Holiday Camps Registration!")
+
+    name = get_username()
+    age = get_age()
+
+    camp_choice = camp_options()
+    transport = shuttle()
+    meal_choice = get_meal()
+
+    total_cost = calculate_cost(camp_choice, transport)
+
+    print(f"{name} (age {age}) is attending the {camp_choice} for {camp_choice['days']}.")
+    print(f"They chose a {meal_choice}. The total cost is {total_cost}.")
