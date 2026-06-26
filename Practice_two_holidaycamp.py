@@ -43,10 +43,7 @@ def get_age():
                 number_only = False
 
         if number_only == False:
-            agetry = False
-            print("Invalid! Stopping.")
-            print("Invalid! Stopping..")
-            print("Invalid! Stopping...")
+            print("Enter your age.")
             return False
         elif age_input == "":
             print("Enter your age.")
@@ -64,10 +61,12 @@ def camp_options():
 
     camp_pickwhile = True
     while camp_pickwhile == True:
-        camp_pick = int(input("Enter the number of the camp you want: "))
-        if camp_pick <= len(camps):
+        camp_pick = input("Enter the number of the camp you want: ")
+        if camp_pick == "":
+            print("Please pick from the options above!")
+        elif int(camp_pick) <= len(camps):
             camp_pickwhile = False
-            return camp_pick
+            return int(camp_pick)
         else:
             print("Please pick from the options above!")
 
@@ -95,12 +94,14 @@ def calculate_cost(camp_choice, transport):
 
 def get_yes_no(question):
     repeat = True
-    answer = input(f"{question}")
     while repeat == True:
-        if answer == "Yes":
+        answer = input(f"{question}")
+        if answer == "":
+            ("Please say either Yes or No. ")
+        elif answer == "Yes":
             repeat = False
             return True
-        if answer == "No":
+        elif answer == "No":
             repeat = False
             return False
         else:
