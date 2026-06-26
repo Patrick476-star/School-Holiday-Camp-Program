@@ -29,7 +29,6 @@ def get_username():
             print("Please input your name.")
         else:
             nametry = False
-            print(f"{username_input}")
             return username_input
 
 
@@ -72,12 +71,6 @@ def camp_options():
         else:
             print("Please pick from the options above!")
 
-def shuttle():
-    shuttleconfirm = input("Do you want to take the shuttle buys? Enter Yes or No: ").strip().title()
-    if shuttleconfirm == "True":
-        return True
-    elif shuttleconfirm == "False":
-        return False
 
 def get_meal():
     mealask = True
@@ -95,10 +88,25 @@ def get_meal():
                 print("Please pick from the meals above.")
 
 def calculate_cost(camp_choice, transport):
-    if shuttle == True:
-        total_cost = {camp_choice} + 80
-    else:
-        total_cost = {camp_choice['cost']}
+    total_cost = camps[camp_choice - 1]['cost']
+    if transport:
+        total_cost += 80
+    return total_cost
+
+def get_yes_no(question):
+    repeat = True
+    answer = input(f"{question}")
+    while repeat == True:
+        if answer == "Yes":
+            repeat = False
+            return True
+        if answer == "No":
+            repeat = False
+            return False
+        else:
+            ("Please say either Yes or No. ")
+
+
 
 #MAIN --------------------------------------------------------------------------------------
 
@@ -111,11 +119,26 @@ while repeat:
     name = get_username()
     age = get_age()
 
+    print()
+
     camp_option = camp_options()
-    transport = shuttle()
+    transport = get_yes_no("Do you want to take the shuttle bus? Enter Yes or No: ")
     meal_choice = get_meal()
+
+    print()
 
     total_cost = calculate_cost(camp_option, transport)
 
-    print(f"{name} (age {age}) is attending the {camp_option} for {camp_option['days']}.")
-    print(f"They chose a {meal_choice}. The total cost is {total_cost}.")
+    print(f"{name} (age {age}) is attending the {camps[camp_option - 1]['name']} for {camps[camp_option - 1]['days']} days.")
+    print(f"They chose a {meal_choice} meal. The total cost is {total_cost}.")
+
+    confirm = get_yes_no("Enter yes to confirm your attendance: ")
+    if confirm:
+        print("Attendance confirmed!")
+        repeat = False
+    else:
+        print("Attendance cancelled.")
+        repeat = False
+        
+
+
